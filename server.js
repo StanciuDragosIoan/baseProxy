@@ -1,27 +1,28 @@
-// server.js
 const express = require("express");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const app = express();
 
+// ✅ Add CORS headers BEFORE proxy
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   next();
 });
 
-// Proxy all requests to / to www.test.com
+// 🔁 Proxy setup
 app.use(
   "/",
   createProxyMiddleware({
-    target: "https://chatgpt.com/",
+    target: "https://chat.openai.com", // or your target domain
     changeOrigin: true,
+    secure: false, // helpful if SSL certs cause issues
     pathRewrite: {
-      "^/": "/", // Optional: rewrite path if needed
+      "^/": "/", // optional
     },
   })
 );
 
-const PORT = 3000;
+const PORT = 3002;
 app.listen(PORT, () => {
   console.log(`Proxy server running at http://localhost:${PORT}`);
 });
