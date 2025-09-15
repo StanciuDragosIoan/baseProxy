@@ -13,7 +13,7 @@ app.use((req, res, next) => {
 app.use(
   "/",
   createProxyMiddleware({
-    target: "http://web.whatsapp.com", // or your target domain
+    target: "https://web.whatsapp.com/", // or your target domain
     changeOrigin: true,
     secure: false, // helpful if SSL certs cause issues
     pathRewrite: {
